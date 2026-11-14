@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tiffinify — Product Presentation</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --masala: #B5451B; --turmeric: #F5A623; --leaf: #1A7F4B; --ink: #1C1917;
+    --white: #FFFFFF; --slide-bg: #0D0D0D; --card-bg: #1A1A1A; --accent: #F5A623;
+    --accent2: #B5451B; --blue: #4A9EFF; --purple: #9B59FF; --green: #2ECC71; --red: #E74C3C;
+  }
+  body { font-family: 'Inter', sans-serif; background: #050505; color: #FFFFFF; overflow-x: hidden; }
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    background: rgba(13,13,13,0.92); backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(245,166,35,0.15); padding: 12px 32px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-logo { font-family: 'Outfit', sans-serif; font-weight: 900; font-size: 22px; color: var(--accent); }
+  .slide {
+    min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 100px 60px 60px; position: relative; overflow: hidden;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+  .slide-number { position: absolute; top: 80px; right: 50px; font-size: 11px; font-weight: 700; letter-spacing: 3px; color: rgba(255,255,255,0.2); text-transform: uppercase; }
+  .bg-grid {
+    position: absolute; inset: 0;
+    background-image: linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+    background-size: 60px 60px; pointer-events: none;
+  }
+  .bg-circle { position: absolute; border-radius: 50%; filter: blur(80px); pointer-events: none; opacity: 0.08; }
+  .hero-tag {
+    display: inline-block; background: rgba(245,166,35,0.12); border: 1px solid rgba(245,166,35,0.35);
+    color: var(--accent); font-size: 11px; font-weight: 700; letter-spacing: 3px;
+    padding: 6px 18px; border-radius: 50px; text-transform: uppercase; margin-bottom: 28px;
+  }
+  .hero-title {
+    font-family: 'Outfit', sans-serif; font-weight: 900; font-size: clamp(52px, 8vw, 96px);
+    letter-spacing: -3px; line-height: 1.0;
+    background: linear-gradient(135deg, #FFFFFF 0%, #F5A623 50%, #B5451B 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 20px;
+  }
+  .hero-sub { font-size: clamp(16px, 2vw, 22px); color: rgba(255,255,255,0.55); font-weight: 400; max-width: 640px; line-height: 1.6; margin: 0 auto 40px; }
+  .hero-pills { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .pill { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); color: rgba(255,255,255,0.75); font-size: 12px; font-weight: 600; padding: 8px 18px; border-radius: 50px; }
+  .pill.accent { background: rgba(245,166,35,0.12); border-color: rgba(245,166,35,0.3); color: var(--accent); }
+  .pill.green { background: rgba(46,204,113,0.1); border-color: rgba(46,204,113,0.25); color: #2ECC71; }
+  .section-tag {
+    display: inline-flex; align-items: center; gap: 8px; background: rgba(245,166,35,0.1);
+    border: 1px solid rgba(245,166,35,0.25); color: var(--accent); font-size: 10px; font-weight: 700;
+    letter-spacing: 3px; padding: 5px 14px; border-radius: 4px; text-transform: uppercase; margin-bottom: 18px;
+  }
+  .section-title { font-family: 'Outfit', sans-serif; font-weight: 800; font-size: clamp(32px, 5vw, 56px); letter-spacing: -2px; line-height: 1.1; color: #FFFFFF; margin-bottom: 14px; }
+  .section-title span { color: var(--accent); }
+  .section-sub { font-size: 17px; color: rgba(255,255,255,0.45); font-weight: 400; max-width: 560px; line-height: 1.65; }
+  .divider { width: 60px; height: 3px; background: var(--accent); border-radius: 2px; margin: 16px 0; }
+  .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; width: 100%; max-width: 1100px; margin-top: 48px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; width: 100%; max-width: 1100px; margin-top: 48px; }
+  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; width: 100%; max-width: 1100px; margin-top: 48px; }
+  .card {
+    background: #1A1A1A; border: 1px solid rgba(255,255,255,0.06); border-radius: 20px; padding: 28px;
+    position: relative; overflow: hidden;
+  }
+  .card-glow { position: absolute; top: -40px; right: -40px; width: 120px; height: 120px; border-radius: 50%; filter: blur(50px); opacity: 0.15; }
+  .card-icon { font-size: 32px; margin-bottom: 14px; }
+  .card-title { font-weight: 700; font-size: 16px; margin-bottom: 8px; color: #FFFFFF; }
+  .card-text { font-size: 13.5px; color: rgba(255,255,255,0.5); line-height: 1.6; }
+  .card-badge { display: inline-block; font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 3px 10px; border-radius: 4px; margin-bottom: 10px; }
+  .badge-new { background: rgba(74,158,255,0.15); color: #4A9EFF; }
+  .badge-core { background: rgba(245,166,35,0.15); color: var(--accent); }
+  .feature-row { display: flex; gap: 60px; align-items: center; width: 100%; max-width: 1100px; }
+  .feature-list { list-style: none; margin-top: 30px; }
+  .feature-list li { display: flex; align-items: flex-start; gap: 14px; padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.04); }
+  .feature-list li:last-child { border-bottom: none; }
+  .feature-icon { font-size: 22px; flex-shrink: 0; margin-top: 2px; }
+  .feature-info h4 { font-weight: 700; font-size: 14px; margin-bottom: 4px; }
+  .feature-info p { font-size: 12.5px; color: rgba(255,255,255,0.45); line-height: 1.5; }
+  .stat-card { background: #1A1A1A; border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; padding: 24px; text-align: center; }
+  .stat-number { font-family: 'Outfit', sans-serif; font-weight: 900; font-size: 42px; letter-spacing: -2px; }
+  .stat-label { font-size: 12px; color: rgba(255,255,255,0.4); font-weight: 600; margin-top: 4px; }
+  .tech-item { background: #1A1A1A; border: 1px solid rgba(255,255,255,0.06); border-radius: 14px; padding: 18px; display: flex; align-items: center; gap: 14px; }
+  .tech-icon { font-size: 28px; flex-shrink: 0; }
+  .tech-name { font-weight: 700; font-size: 15px; }
+  .tech-desc { font-size: 12px; color: rgba(255,255,255,0.4); margin-top: 2px; }
+  .payment-visual { background: #0C2340; border-radius: 18px; padding: 28px; border: 1px solid rgba(74,158,255,0.2); min-width: 300px; }
+  .payment-header { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
+  .rzp-blue { color: #4A9EFF; font-weight: 900; font-size: 18px; font-family: 'Outfit', sans-serif; }
+  .rzp-sub { font-size: 11px; color: rgba(255,255,255,0.35); }
+  .payment-amount { font-family: 'Outfit', sans-serif; font-weight: 900; font-size: 36px; color: #FFFFFF; margin-bottom: 8px; }
+  .payment-desc { font-size: 12px; color: rgba(255,255,255,0.4); margin-bottom: 22px; }
+  .upi-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 18px; }
+  .upi-btn { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; padding: 12px; text-align: center; font-size: 12px; font-weight: 600; }
+  .pay-btn { width: 100%; background: linear-gradient(135deg, #4A9EFF, #2E78D4); border-radius: 10px; padding: 14px; font-weight: 800; font-size: 15px; text-align: center; }
+  .ssl-badge { text-align: center; font-size: 10px; color: rgba(255,255,255,0.25); margin-top: 12px; }
+  .screen-card { background: #111; border: 1px solid rgba(255,255,255,0.08); border-radius: 22px; padding: 20px 16px; text-align: center; min-width: 120px; }
+  .screen-icon { font-size: 34px; margin-bottom: 10px; }
+  .screen-name { font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.8); }
+  .screens-row { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; margin-top: 40px; }
+  ul.check-list { list-style: none; }
+  ul.check-list li { padding: 6px 0; font-size: 13px; color: rgba(255,255,255,0.6); display: flex; gap: 10px; align-items: flex-start; }
+  ul.check-list li::before { content: "✓"; color: var(--accent); font-weight: 800; flex-shrink: 0; }
+  .tl-row { display: flex; gap: 24px; margin-bottom: 0; }
+  .tl-left { text-align: right; width: 110px; flex-shrink: 0; }
+  .tl-phase-label { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); }
+  .tl-center { display: flex; flex-direction: column; align-items: center; }
+  .tl-line { width: 2px; flex: 1; background: rgba(255,255,255,0.08); min-height: 40px; }
+  .tl-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+  .tl-right { flex: 1; padding-bottom: 36px; }
+  .tl-title { font-weight: 700; font-size: 15px; margin-bottom: 8px; }
+  .tl-items { font-size: 12.5px; color: rgba(255,255,255,0.45); line-height: 1.8; }
+  @media print { .nav { display: none; } .slide { page-break-after: always; } body { background: #050505; -webkit-print-color-adjust: exact; print-color-adjust: exact; } }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-logo">🍱 Tiffinify</div>
+  <div style="font-size:12px;color:rgba(255,255,255,0.35);">Product Presentation · 2026</div>
+  <div style="font-size:12px;color:rgba(255,255,255,0.25); font-weight:600;">12 Slides · Flutter App</div>
+</nav>
+
+<!-- SLIDE 1: HERO -->
+<section class="slide" style="background: radial-gradient(ellipse at 30% 50%, rgba(181,69,27,0.25) 0%, transparent 60%), radial-gradient(ellipse at 70% 30%, rgba(245,166,35,0.15) 0%, transparent 50%), #050505; text-align:center;">
+  <div class="bg-grid"></div>
+  <div class="bg-circle" style="width:600px;height:600px;background:#F5A623;top:-200px;right:-100px;"></div>
+  <div class="bg-circle" style="width:400px;height:400px;background:#B5451B;bottom:-100px;left:-100px;"></div>
+  <div class="hero-tag">🍱 Product Deck · 2026</div>
+  <div class="hero-title">Tiffinify</div>
+  <div class="hero-sub">India's premium homestyle tiffin subscription platform — fresh, nutritious daily meals delivered through a beautifully crafted mobile experience.</div>
+  <div class="hero-pills">
+    <div class="pill accent">Flutter Mobile App</div>
+    <div class="pill">iOS &amp; Android</div>
+    <div class="pill green">Subscription-First</div>
+    <div class="pill">Riverpod · Dart</div>
+    <div class="pill">Mock Razorpay Gateway</div>
+  </div>
+  <div class="slide-number">01 / 12</div>
+</section>
+
+<!-- SLIDE 2: PROBLEM -->
+<section class="slide" style="background:#060606;">
+  <div class="bg-grid"></div>
+  <div style="text-align:center; max-width:900px;">
+    <div class="section-tag">💡 The Problem</div>
+    <div class="section-title">Working Indians Deserve <span>Better Food</span></div>
+    <div class="section-sub" style="margin: 0 auto 50px;">Millions of professionals, students &amp; families struggle with inconsistent, unhealthy, or overpriced food options daily. Tiffinify bridges this gap.</div>
+  </div>
+  <div class="grid-3" style="max-width:950px;">
+    <div class="card"><div class="card-glow" style="background:#E74C3C;"></div><div class="card-icon">😩</div><div class="card-title">The Daily Struggle</div><div class="card-text">Ordering from Zomato/Swiggy daily is expensive (₹300–500/day), inconsistent in quality, and lacks nutritional focus for health-conscious users.</div></div>
+    <div class="card"><div class="card-glow" style="background:#F5A623;"></div><div class="card-icon">🏠</div><div class="card-title">The Gap</div><div class="card-text">Local tiffin services exist but are offline &amp; unorganized — no digital tracking, no menu preview, no dietary customization, no digital payments.</div></div>
+    <div class="card"><div class="card-glow" style="background:#2ECC71;"></div><div class="card-icon">✅</div><div class="card-title">Our Solution</div><div class="card-text">Tiffinify digitizes the tiffin experience — daily menus, subscriptions, customization, real-time tracking, and seamless payment in one beautiful app.</div></div>
+  </div>
+  <div class="slide-number">02 / 12</div>
+</section>
+
+<!-- SLIDE 3: CORE FEATURES -->
+<section class="slide" style="background:#070707;">
+  <div class="bg-grid"></div>
+  <div style="text-align:center;">
+    <div class="section-tag">⭐ Core Features</div>
+    <div class="section-title">Everything Inside <span>Tiffinify</span></div>
+    <div class="section-sub" style="margin: 0 auto;">A complete end-to-end tiffin management experience built into one powerful Flutter app.</div>
+  </div>
+  <div class="grid-4">
+    <div class="card"><div class="card-badge badge-core">CORE</div><div class="card-icon">📱</div><div class="card-title">OTP Login</div><div class="card-text">Secure mobile OTP authentication with auto-profile setup for new users and session persistence.</div></div>
+    <div class="card"><div class="card-badge badge-core">CORE</div><div class="card-icon">🍽️</div><div class="card-title">Daily Menu</div><div class="card-text">Dynamic Breakfast, Lunch &amp; Dinner menus with Veg / Non-Veg / Jain diet type badges and filtering.</div></div>
+    <div class="card"><div class="card-badge badge-core">CORE</div><div class="card-icon">🛒</div><div class="card-title">Cart &amp; Checkout</div><div class="card-text">Smart cart with quantity management, delivery charges, GST calculation, and order summary.</div></div>
+    <div class="card"><div class="card-badge badge-new">NEW</div><div class="card-icon">💳</div><div class="card-title">Payment Gateway</div><div class="card-text">Mock Razorpay — UPI, Cards, Netbanking + Cash on Delivery + Tiffinify Wallet with payment ID.</div></div>
+    <div class="card"><div class="card-badge badge-core">CORE</div><div class="card-icon">📦</div><div class="card-title">Subscriptions</div><div class="card-text">Weekly &amp; Monthly meal plans with Pause, Resume, and Skip-a-Day lifecycle management.</div></div>
+    <div class="card"><div class="card-badge badge-core">CORE</div><div class="card-icon">📍</div><div class="card-title">Order Tracking</div><div class="card-text">Real-time order tracking with countdown timer, animated progress steps, and live delivery status.</div></div>
+    <div class="card"><div class="card-badge badge-new">NEW</div><div class="card-icon">🎂</div><div class="card-title">Festival Specials</div><div class="card-text">Seasonal menus for Diwali, Holi, Navratri and more — with themed UI cards and limited offers.</div></div>
+    <div class="card"><div class="card-badge badge-new">NEW</div><div class="card-icon">🔔</div><div class="card-title">Notifications</div><div class="card-text">In-app notification center for order updates, new menus, subscription alerts, and offers.</div></div>
+  </div>
+  <div class="slide-number">03 / 12</div>
+</section>
+
+<!-- SLIDE 4: APP SCREENS -->
+<section class="slide" style="background:#050505;">
+  <div class="bg-grid"></div>
+  <div style="text-align:center;">
+    <div class="section-tag">📱 App Screens</div>
+    <div class="section-title">12 Fully-Working <span>App Screens</span></div>
+    <div class="section-sub" style="margin: 0 auto;">Every screen is fully functional — no placeholders, no stubs. A complete user journey from onboarding to delivery.</div>
+  </div>
+  <div class="screens-row">
+    <div class="screen-card"><div class="screen-icon">🌅</div><div class="screen-name">Splash Screen</div></div>
+    <div class="screen-card"><div class="screen-icon">👋</div><div class="screen-name">Onboarding</div></div>
+    <div class="screen-card"><div class="screen-icon">🔐</div><div class="screen-name">OTP Login</div></div>
+    <div class="screen-card"><div class="screen-icon">👤</div><div class="screen-name">Profile Setup</div></div>
+    <div class="screen-card"><div class="screen-icon">🏠</div><div class="screen-name">Home Feed</div></div>
+    <div class="screen-card"><div class="screen-icon">🍽️</div><div class="screen-name">Daily Menu</div></div>
+    <div class="screen-card"><div class="screen-icon">🛒</div><div class="screen-name">Cart / Checkout</div></div>
+    <div class="screen-card"><div class="screen-icon">💳</div><div class="screen-name">Payment Gateway</div></div>
+    <div class="screen-card"><div class="screen-icon">📦</div><div class="screen-name">Subscription</div></div>
+    <div class="screen-card"><div class="screen-icon">📍</div><div class="screen-name">Order Tracking</div></div>
+    <div class="screen-card"><div class="screen-icon">🎂</div><div class="screen-name">Festival Specials</div></div>
+    <div class="screen-card"><div class="screen-icon">👤</div><div class="screen-name">Profile &amp; Wallet</div></div>
+  </div>
+  <div class="slide-number">04 / 12</div>
+</section>
+
+<!-- SLIDE 5: AUTH -->
+<section class="slide" style="background:#060606;">
+  <div class="bg-grid"></div>
+  <div class="feature-row">
+    <div style="flex: 0 0 45%;">
+      <div class="section-tag">🔐 Auth &amp; Onboarding</div>
+      <div class="section-title">Smart <span>User Onboarding</span></div>
+      <div class="divider"></div>
+      <div class="section-sub">A frictionless 3-step onboarding flow with intelligent new-user detection and profile setup.</div>
+      <ul class="feature-list">
+        <li><div class="feature-icon">🌅</div><div class="feature-info"><h4>Animated Splash Screen</h4><p>Custom Tiffinify logo animation with delivery illustration on launch.</p></div></li>
+        <li><div class="feature-icon">📖</div><div class="feature-info"><h4>3-Page Onboarding</h4><p>Beautiful illustrated cards explaining the value proposition — shown only once on first install.</p></div></li>
+        <li><div class="feature-icon">📱</div><div class="feature-info"><h4>OTP Mobile Login</h4><p>Mobile number + 4-digit OTP with mock API. State persisted in SharedPreferences.</p></div></li>
+        <li><div class="feature-icon">✏️</div><div class="feature-info"><h4>Smart Profile Setup</h4><p>Auto-detects new users — routes to profile name setup before Home screen.</p></div></li>
+      </ul>
+    </div>
+    <div style="flex:1; display:flex; flex-direction:column; gap:14px;">
+      <div class="card" style="border-left: 3px solid var(--accent);"><div class="card-icon">🔄</div><div class="card-title">Session Persistence</div><div class="card-text">Login state persisted via SharedPreferences — users stay logged in across app restarts.</div></div>
+      <div class="card" style="border-left: 3px solid #4A9EFF;"><div class="card-icon">🛡️</div><div class="card-title">Mock OTP Verification</div><div class="card-text">Accepts any 4-digit OTP for demo. Production-ready to swap with a real SMS gateway (Twilio/2Factor).</div></div>
+      <div class="card" style="border-left: 3px solid #2ECC71;"><div class="card-icon">⚡</div><div class="card-title">Smart Routing</div><div class="card-text">New user → Profile Setup → Home. Returning user → Home. Onboarded → Skip onboarding.</div></div>
+    </div>
+  </div>
+  <div class="slide-number">05 / 12</div>
+</section>
+
+<!-- SLIDE 6: MENU -->
+<section class="slide" style="background:#070707;">
+  <div class="bg-grid"></div>
+  <div style="text-align:center;">
+    <div class="section-tag">🍽️ Menu &amp; Ordering</div>
+    <div class="section-title">Dynamic <span>Daily Menu</span> System</div>
+    <div class="section-sub" style="margin: 0 auto 48px;">Fresh Breakfast, Lunch &amp; Dinner with dietary filters and complete cart-to-payment flow.</div>
+  </div>
+  <div class="grid-2" style="max-width:950px;">
+    <div class="card"><div class="card-glow" style="background:#F5A623;"></div><div class="card-icon">🥦</div><div class="card-title">Diet Type Filtering</div><div class="card-text">Home screen chips: <strong style="color:#2ECC71;">Veg</strong>, <strong style="color:#E74C3C;">Non-Veg</strong>, <strong style="color:#F5A623;">Jain</strong>, All. Each item shows a colored diet badge instantly on filter.</div></div>
+    <div class="card"><div class="card-glow" style="background:#B5451B;"></div><div class="card-icon">🕐</div><div class="card-title">3 Meal Time Sections</div><div class="card-text">Menu divided into Breakfast, Lunch, and Dinner. Each item has name, price, dietary tag, description, and add-to-cart button.</div></div>
+    <div class="card"><div class="card-glow" style="background:#4A9EFF;"></div><div class="card-icon">🛒</div><div class="card-title">Smart Cart System</div><div class="card-text">Full cart — add/remove items, live quantity, subtotal, ₹30 delivery charge, 5% GST, and grand total calculated in real time.</div></div>
+    <div class="card"><div class="card-glow" style="background:#9B59FF;"></div><div class="card-icon">🎨</div><div class="card-title">Meal Customization Templates</div><div class="card-text">Save preferences (extra roti, no onion, less spice) as templates. Set any template as default for instant one-tap ordering.</div></div>
+  </div>
+  <div class="slide-number">06 / 12</div>
+</section>
+
+<!-- SLIDE 7: PAYMENT -->
+<section class="slide" style="background:#050505;">
+  <div class="bg-grid"></div>
+  <div class="feature-row">
+    <div style="flex: 0 0 45%;">
+      <div class="section-tag">💳 Payments</div>
+      <div class="section-title">Mock <span>Razorpay</span> Gateway</div>
+      <div class="divider"></div>
+      <div class="section-sub">A fully simulated, authentic Razorpay payment gateway — production-ready architecture, ready to go live.</div>
+      <ul class="feature-list" style="margin-top:24px;">
+        <li><div class="feature-icon">💳</div><div class="feature-info"><h4>Razorpay Online Payment</h4><p>UPI (GPay, PhonePe, Paytm, BHIM), Debit/Credit Cards, Netbanking options in the gateway.</p></div></li>
+        <li><div class="feature-icon">💵</div><div class="feature-info"><h4>Cash on Delivery</h4><p>COD — user pays cash to the delivery partner on arrival.</p></div></li>
+        <li><div class="feature-icon">👛</div><div class="feature-info"><h4>Tiffinify Wallet</h4><p>In-app wallet with ₹120 demo balance. Deducted on payment with live balance check.</p></div></li>
+        <li><div class="feature-icon">🔑</div><div class="feature-info"><h4>Mock Payment ID</h4><p>Generates unique Payment ID (e.g. <code style="color:#4A9EFF;font-size:11px;">pay_rzp_mock_98234</code>) simulating real Razorpay response.</p></div></li>
+      </ul>
+    </div>
+    <div style="flex:1; display:flex; justify-content:center; align-items:center;">
+      <div class="payment-visual">
+        <div class="payment-header"><span style="font-size:24px;">💳</span><div><div class="rzp-blue">Razorpay</div><div class="rzp-sub">🔒 256-bit SSL Encrypted</div></div></div>
+        <div style="font-size:11px; color:rgba(255,255,255,0.3); margin-bottom:6px; letter-spacing:1px; text-transform:uppercase;">Tiffinify Meals</div>
+        <div class="payment-amount">₹135.00</div>
+        <div class="payment-desc">Paneer Butter Masala + Dal Tadka</div>
+        <div style="font-size:11px; color:rgba(255,255,255,0.35); margin-bottom:12px; letter-spacing:1px; text-transform:uppercase;">Pay via UPI</div>
+        <div class="upi-grid">
+          <div class="upi-btn">🟢 GPay</div><div class="upi-btn">🟣 PhonePe</div>
+          <div class="upi-btn">🔵 Paytm</div><div class="upi-btn">🟠 BHIM</div>
+        </div>
+        <div class="pay-btn">PAY ₹135.00</div>
+        <div class="ssl-badge">🔐 Your payment is secured by Razorpay</div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-number">07 / 12</div>
+</section>
+
+<!-- SLIDE 8: SUBSCRIPTIONS -->
+<section class="slide" style="background:#060606;">
+  <div class="bg-grid"></div>
+  <div style="text-align:center;">
+    <div class="section-tag">📦 Subscriptions</div>
+    <div class="section-title">Flexible <span>Meal Plans</span></div>
+    <div class="section-sub" style="margin: 0 auto 48px;">Weekly and Monthly plans with complete lifecycle — Pause, Resume, Skip, and Auto-renew.</div>
+  </div>
+  <div class="grid-3" style="max-width:950px;">
+    <div class="card" style="border: 1px solid rgba(245,166,35,0.3);">
+      <div style="background: rgba(245,166,35,0.1); border-radius:12px; padding:16px; margin-bottom:16px; text-align:center;">
+        <div style="font-size:11px; font-weight:700; letter-spacing:2px; color:var(--accent); text-transform:uppercase; margin-bottom:6px;">Weekly Plan</div>
+        <div style="font-family:'Outfit',sans-serif; font-size:36px; font-weight:900;">₹499</div>
+        <div style="font-size:12px; color:rgba(255,255,255,0.4);">7 days · Fresh daily</div>
+      </div>
+      <ul class="check-list"><li>Daily fresh tiffin delivery</li><li>1x or 2x meals per day</li><li>Veg / Non-Veg / Jain</li><li>7 days coverage</li></ul>
+    </div>
+    <div class="card" style="border: 1px solid rgba(181,69,27,0.4);">
+      <div style="position:absolute;top:16px;right:16px;background:var(--accent);color:#000;font-size:9px;font-weight:900;letter-spacing:1.5px;padding:4px 10px;border-radius:4px;text-transform:uppercase;">BEST VALUE</div>
+      <div style="background: rgba(181,69,27,0.15); border-radius:12px; padding:16px; margin-bottom:16px; text-align:center;">
+        <div style="font-size:11px; font-weight:700; letter-spacing:2px; color:#B5451B; text-transform:uppercase; margin-bottom:6px;">Monthly Plan</div>
+        <div style="font-family:'Outfit',sans-serif; font-size:36px; font-weight:900;">₹1799</div>
+        <div style="font-size:12px; color:rgba(255,255,255,0.4);">30 days · Save 10%</div>
+      </div>
+      <ul class="check-list"><li>30 days daily tiffin</li><li>1x or 2x meals per day</li><li>Diet preference</li><li>Priority delivery</li><li>Auto-renewal</li></ul>
+    </div>
+    <div class="card">
+      <div class="card-title" style="margin-bottom:18px;">🎛️ Plan Management</div>
+      <div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.05);"><span style="font-size:18px;">⏸</span><div><div style="font-weight:700;font-size:13px;">Pause Plan</div><div style="font-size:11.5px;color:rgba(255,255,255,0.4);">When travelling or busy</div></div></div>
+      <div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.05);"><span style="font-size:18px;">▶</span><div><div style="font-weight:700;font-size:13px;">Resume Plan</div><div style="font-size:11.5px;color:rgba(255,255,255,0.4);">One tap to resume</div></div></div>
+      <div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.05);"><span style="font-size:18px;">⏭</span><div><div style="font-weight:700;font-size:13px;">Skip Today</div><div style="font-size:11.5px;color:rgba(255,255,255,0.4);">Wallet refund for skipped days</div></div></div>
+      <div style="display:flex;align-items:center;gap:10px;padding:10px 0;"><span style="font-size:18px;">📊</span><div><div style="font-weight:700;font-size:13px;">Progress Bar</div><div style="font-size:11.5px;color:rgba(255,255,255,0.4);">Visual countdown of days left</div></div></div>
+    </div>
+  </div>
+  <div class="slide-number">08 / 12</div>
+</section>
+
+<!-- SLIDE 9: PROFILE -->
+<section class="slide" style="background:#070707;">
+  <div class="bg-grid"></div>
+  <div style="text-align:center;">
+    <div class="section-tag">👤 Profile &amp; Wallet</div>
+    <div class="section-title">Complete <span>User Account</span></div>
+    <div class="section-sub" style="margin: 0 auto 48px;">Every profile option is fully interactive — addresses, support, wallet, preferences, and templates.</div>
+  </div>
+  <div class="grid-4">
+    <div class="card"><div class="card-icon">📍</div><div class="card-title">Saved Addresses</div><div class="card-text">Add and manage multiple delivery addresses with Home/Work/Other labels and Add New dialog.</div></div>
+    <div class="card"><div class="card-icon">👛</div><div class="card-title">Tiffinify Wallet</div><div class="card-text">In-app wallet with full transaction history — credits from skipped meals, debits from orders.</div></div>
+    <div class="card"><div class="card-icon">🥦</div><div class="card-title">Dietary Preferences</div><div class="card-text">Set default diet type (Veg/Non-Veg/Jain) and allergy notes — reflected across the full app.</div></div>
+    <div class="card"><div class="card-icon">🎛️</div><div class="card-title">Order Templates</div><div class="card-text">Save customization templates (extra roti, no onion) and set any as default for instant reorder.</div></div>
+    <div class="card"><div class="card-icon">📞</div><div class="card-title">Help &amp; Support</div><div class="card-text">Direct call, WhatsApp chat &amp; FAQ section. Opens phone dialer and WhatsApp natively from app.</div></div>
+    <div class="card"><div class="card-icon">🔔</div><div class="card-title">Notifications</div><div class="card-text">In-app notification center with order updates, offers, subscription alerts and announcements.</div></div>
+    <div class="card"><div class="card-icon">🎂</div><div class="card-title">Festival Specials</div><div class="card-text">Seasonal menus for Diwali, Holi, Navratri with themed cards and limited-time ordering.</div></div>
+    <div class="card"><div class="card-icon">📊</div><div class="card-title">Order History</div><div class="card-text">Full order history with status, items, payment method, Razorpay payment ID, and reorder option.</div></div>
+  </div>
+  <div class="slide-number">09 / 12</div>
+</section>
+
+<!-- SLIDE 10: TECH STACK -->
+<section class="slide" style="background:#060606;">
+  <div class="bg-grid"></div>
+  <div style="display:flex; gap:80px; align-items:flex-start; width:100%; max-width:1100px;">
+    <div style="flex: 0 0 38%;">
+      <div class="section-tag">⚙️ Technology</div>
+      <div class="section-title">Built With<br/>the <span>Best</span> Stack</div>
+      <div class="divider"></div>
+      <div class="section-sub">Production-grade Flutter architecture using modern state management and clean layered patterns.</div>
+      <div style="margin-top:28px; display:flex; flex-direction:column; gap:10px;">
+        <div class="stat-card" style="text-align:left;padding:14px 18px;display:flex;gap:14px;align-items:center;"><div style="font-size:26px;">📁</div><div><div style="font-size:20px;font-weight:800;font-family:'Outfit',sans-serif;color:var(--accent);">12</div><div style="font-size:11px;color:rgba(255,255,255,0.4);">Feature Modules</div></div></div>
+        <div class="stat-card" style="text-align:left;padding:14px 18px;display:flex;gap:14px;align-items:center;"><div style="font-size:26px;">🧩</div><div><div style="font-size:20px;font-weight:800;font-family:'Outfit',sans-serif;color:#4A9EFF;">7</div><div style="font-size:11px;color:rgba(255,255,255,0.4);">Data Models</div></div></div>
+        <div class="stat-card" style="text-align:left;padding:14px 18px;display:flex;gap:14px;align-items:center;"><div style="font-size:26px;">⚡</div><div><div style="font-size:20px;font-weight:800;font-family:'Outfit',sans-serif;color:#9B59FF;">5</div><div style="font-size:11px;color:rgba(255,255,255,0.4);">Riverpod Providers</div></div></div>
+      </div>
+    </div>
+    <div style="flex:1; display:flex; flex-direction:column; gap:12px;">
+      <div class="tech-item"><div class="tech-icon">🐦</div><div><div class="tech-name">Flutter (Dart)</div><div class="tech-desc">Cross-platform — iOS &amp; Android from a single codebase</div></div></div>
+      <div class="tech-item"><div class="tech-icon">🔵</div><div><div class="tech-name">Riverpod 2.x</div><div class="tech-desc">State management — AuthNotifier, CartNotifier, SubscriptionNotifier</div></div></div>
+      <div class="tech-item"><div class="tech-icon">💾</div><div><div class="tech-name">SharedPreferences</div><div class="tech-desc">Local persistence — login state, user name, onboarding flag</div></div></div>
+      <div class="tech-item"><div class="tech-icon">🌐</div><div><div class="tech-name">Dio HTTP Client</div><div class="tech-desc">REST API integration with mock service — production-swap ready</div></div></div>
+      <div class="tech-item"><div class="tech-icon">🔤</div><div><div class="tech-name">Google Fonts (Inter)</div><div class="tech-desc">Premium Inter typeface for all text rendering</div></div></div>
+      <div class="tech-item"><div class="tech-icon">🏗️</div><div><div class="tech-name">Clean Architecture</div><div class="tech-desc">Features → Data (Models/Services/Repos) → Providers → Widgets</div></div></div>
+      <div class="tech-item"><div class="tech-icon">📡</div><div><div class="tech-name">Mock Socket Service</div><div class="tech-desc">Simulated real-time WebSocket for live order tracking</div></div></div>
+    </div>
+  </div>
+  <div class="slide-number">10 / 12</div>
+</section>
+
+<!-- SLIDE 11: ROADMAP -->
+<section class="slide" style="background:#050505;">
+  <div class="bg-grid"></div>
+  <div style="text-align:center; margin-bottom:50px;">
+    <div class="section-tag">🚀 Future Roadmap</div>
+    <div class="section-title">What's <span>Coming Next</span></div>
+    <div class="section-sub" style="margin: 0 auto;">Phased product roadmap — scaling Tiffinify from MVP to a full market-ready platform.</div>
+  </div>
+  <div style="width:100%; max-width:900px;">
+    <div class="tl-row"><div class="tl-left"><div class="tl-phase-label">Phase 1</div><div style="font-size:12px;color:rgba(255,255,255,0.3);margin-top:3px;">Q3 2026</div></div><div class="tl-center"><div class="tl-dot" style="background:#2ECC71;"></div><div class="tl-line"></div></div><div class="tl-right"><div class="tl-title" style="color:#2ECC71;">✅ MVP Launch — <span style="background:rgba(46,204,113,0.15);color:#2ECC71;font-size:9px;font-weight:700;letter-spacing:2px;padding:3px 10px;border-radius:4px;margin-left:6px;text-transform:uppercase;">Completed</span></div><div class="tl-items">OTP Auth · Daily Menu · Cart &amp; Checkout · Mock Razorpay Gateway · Weekly &amp; Monthly Subscriptions · Pause/Resume/Skip · Real-time Order Tracking · Profile &amp; Wallet · Festival Specials · Notifications · Diet Filtering (Veg/Non-Veg/Jain)</div></div></div>
+    <div class="tl-row"><div class="tl-left"><div class="tl-phase-label">Phase 2</div><div style="font-size:12px;color:rgba(255,255,255,0.3);margin-top:3px;">Q4 2026</div></div><div class="tl-center"><div class="tl-dot" style="background:#F5A623;"></div><div class="tl-line"></div></div><div class="tl-right"><div class="tl-title" style="color:#F5A623;">🔥 Go Live — Real Backend</div><div class="tl-items">Node.js / Firebase Backend · Live Razorpay Integration · SMS OTP via Twilio · Google Maps Live Tracking · Admin Dashboard · Tiffin Provider Portal · Push Notifications (FCM)</div></div></div>
+    <div class="tl-row"><div class="tl-left"><div class="tl-phase-label">Phase 3</div><div style="font-size:12px;color:rgba(255,255,255,0.3);margin-top:3px;">Q1 2027</div></div><div class="tl-center"><div class="tl-dot" style="background:#9B59FF;"></div><div class="tl-line"></div></div><div class="tl-right"><div class="tl-title" style="color:#9B59FF;">🌟 Scale &amp; Expand</div><div class="tl-items">AI Meal Recommendations · Multi-city Expansion · Referral &amp; Loyalty Program · Group/Corporate Subscriptions · Tiffinify Prepaid Meal Card · WhatsApp Order Reminders</div></div></div>
+    <div class="tl-row"><div class="tl-left"><div class="tl-phase-label">Phase 4</div><div style="font-size:12px;color:rgba(255,255,255,0.3);margin-top:3px;">Q2 2027</div></div><div class="tl-center"><div class="tl-dot" style="background:#4A9EFF;"></div></div><div class="tl-right"><div class="tl-title" style="color:#4A9EFF;">🚀 Marketplace Platform</div><div class="tl-items">Open Tiffin Provider Marketplace · User Reviews &amp; Ratings · Nutrition &amp; Calorie Tracking · Corporate B2B Plans · Revenue Model · Market Expansion</div></div></div>
+  </div>
+  <div class="slide-number">11 / 12</div>
+</section>
+
+<!-- SLIDE 12: CLOSING -->
+<section class="slide" style="background: radial-gradient(ellipse at 50% 50%, rgba(181,69,27,0.2) 0%, rgba(245,166,35,0.05) 40%, transparent 70%), #050505; text-align:center;">
+  <div class="bg-grid"></div>
+  <div class="bg-circle" style="width:700px;height:700px;background:#F5A623;top:-200px;left:-200px;opacity:0.05;"></div>
+  <div class="bg-circle" style="width:500px;height:500px;background:#B5451B;bottom:-150px;right:-150px;opacity:0.07;"></div>
+  <div class="hero-tag">🍱 Thank You</div>
+  <div class="hero-title" style="font-size: clamp(42px, 6vw, 76px);">Built for<br/>Bharat's<br/>Hunger</div>
+  <div class="hero-sub">A complete, production-ready Flutter tiffin platform — 12 screens, multi-payment gateway, dietary preferences, subscription lifecycle, and real-time tracking. All in one app.</div>
+  <div class="grid-4" style="max-width:860px; margin-top:40px;">
+    <div class="stat-card"><div class="stat-number" style="color:var(--accent);">12</div><div class="stat-label">App Screens</div></div>
+    <div class="stat-card"><div class="stat-number" style="color:#4A9EFF;">3</div><div class="stat-label">Payment Options</div></div>
+    <div class="stat-card"><div class="stat-number" style="color:#2ECC71;">3</div><div class="stat-label">Diet Categories</div></div>
+    <div class="stat-card"><div class="stat-number" style="color:#9B59FF;">∞</div><div class="stat-label">Scalability</div></div>
+  </div>
+  <div style="margin-top:40px; padding:22px 36px; border:1px solid rgba(245,166,35,0.2); border-radius:16px; background:rgba(245,166,35,0.04);">
+    <div style="font-size:12px; color:rgba(255,255,255,0.35); font-weight:600; letter-spacing:2px; text-transform:uppercase; margin-bottom:8px;">Project Location</div>
+    <div style="font-family:monospace; font-size:16px; color:var(--accent);">d:\bhumi\fitness_tracker</div>
+    <div style="font-size:12px; color:rgba(255,255,255,0.3); margin-top:6px;">Run: <span style="color:#4A9EFF; font-family:monospace;">flutter run</span></div>
+  </div>
+  <div class="slide-number">12 / 12</div>
+</section>
+
+</body>
+</html>

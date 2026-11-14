@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tiffinify — User Guide | उपयोगकर्ता मार्गदर्शिका</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+Devanagari:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --masala: #B5451B; --turmeric: #F5A623; --leaf: #1A7F4B;
+    --ink: #1C1917; --bg: #FDFAF6; --card: #FFFFFF; --border: #E8E0D8;
+    --text: #2D2520; --muted: #7A6B61;
+  }
+  body { font-family: 'Inter', 'Noto Sans Devanagari', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+
+  /* Page containers */
+  .page { max-width: 820px; margin: 0 auto; padding: 0 32px; }
+
+  /* Cover Page */
+  .cover {
+    background: linear-gradient(160deg, #1C1917 0%, #2D1F18 40%, #B5451B 100%);
+    color: #FFFFFF; min-height: 100vh; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; text-align: center;
+    padding: 60px 40px; position: relative; overflow: hidden;
+  }
+  .cover::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 70% 30%, rgba(245,166,35,0.2) 0%, transparent 60%),
+                radial-gradient(ellipse at 20% 80%, rgba(26,127,75,0.1) 0%, transparent 50%);
+  }
+  .cover-logo { font-size: 72px; margin-bottom: 24px; position: relative; z-index: 1; }
+  .cover-app { font-size: 56px; font-weight: 800; letter-spacing: -2px; margin-bottom: 10px; position: relative; z-index: 1; color: #F5A623; }
+  .cover-tagline { font-size: 18px; color: rgba(255,255,255,0.65); margin-bottom: 40px; position: relative; z-index: 1; max-width: 500px; }
+  .cover-titles { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; position: relative; z-index: 1; margin-bottom: 50px; }
+  .cover-title-box { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 12px; padding: 14px 28px; }
+  .cover-title-box .lang { font-size: 10px; letter-spacing: 2px; color: rgba(255,255,255,0.4); text-transform: uppercase; margin-bottom: 6px; }
+  .cover-title-box .title { font-size: 20px; font-weight: 700; }
+  .cover-pills { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; position: relative; z-index: 1; }
+  .cover-pill { background: rgba(245,166,35,0.15); border: 1px solid rgba(245,166,35,0.3); color: #F5A623; font-size: 11px; font-weight: 600; padding: 6px 16px; border-radius: 50px; }
+  .cover-footer { position: absolute; bottom: 30px; font-size: 12px; color: rgba(255,255,255,0.25); z-index: 1; }
+
+  /* Divider */
+  hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+
+  /* Section Headers */
+  .sec-header {
+    background: linear-gradient(135deg, var(--masala), #8B3015);
+    color: #FFFFFF; padding: 16px 28px; border-radius: 14px;
+    margin: 48px 0 28px;
+    display: flex; align-items: center; gap: 14px;
+  }
+  .sec-header .sec-icon { font-size: 28px; }
+  .sec-header-text .en { font-size: 20px; font-weight: 800; letter-spacing: -0.5px; }
+  .sec-header-text .hi { font-size: 14px; color: rgba(255,255,255,0.65); margin-top: 2px; font-family: 'Noto Sans Devanagari', sans-serif; }
+
+  /* Step Cards */
+  .step-grid { display: flex; flex-direction: column; gap: 18px; margin-bottom: 32px; }
+  .step-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+    padding: 20px 22px; display: flex; gap: 18px; align-items: flex-start;
+  }
+  .step-num {
+    background: var(--masala); color: #FFF; font-weight: 800; font-size: 14px;
+    width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center;
+    justify-content: center; flex-shrink: 0;
+  }
+  .step-content .en { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+  .step-content .hi { font-size: 13.5px; color: var(--muted); font-family: 'Noto Sans Devanagari', sans-serif; line-height: 1.5; }
+  .step-content .desc { font-size: 13px; color: var(--muted); margin-top: 6px; line-height: 1.6; }
+  .step-content .desc-hi { font-size: 12.5px; color: var(--muted); margin-top: 4px; font-family: 'Noto Sans Devanagari', sans-serif; line-height: 1.5; }
+
+  /* Info Cards */
+  .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 32px; }
+  .info-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 20px;
+  }
+  .info-card .icon { font-size: 26px; margin-bottom: 10px; }
+  .info-card .en { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+  .info-card .hi { font-size: 13px; color: var(--muted); font-family: 'Noto Sans Devanagari', sans-serif; line-height: 1.5; }
+
+  /* Highlight box */
+  .tip-box {
+    background: rgba(245,166,35,0.08); border: 1px solid rgba(245,166,35,0.3);
+    border-left: 4px solid var(--turmeric); border-radius: 10px; padding: 16px 20px;
+    margin: 20px 0;
+  }
+  .tip-box .tip-en { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+  .tip-box .tip-hi { font-size: 13px; color: var(--muted); font-family: 'Noto Sans Devanagari', sans-serif; }
+
+  .note-box {
+    background: rgba(26,127,75,0.08); border: 1px solid rgba(26,127,75,0.25);
+    border-left: 4px solid var(--leaf); border-radius: 10px; padding: 16px 20px; margin: 20px 0;
+  }
+  .note-box .tip-en { font-size: 14px; font-weight: 600; color: var(--leaf); margin-bottom: 4px; }
+  .note-box .tip-hi { font-size: 13px; color: var(--muted); font-family: 'Noto Sans Devanagari', sans-serif; }
+
+  /* Table */
+  table { width: 100%; border-collapse: collapse; margin: 24px 0 32px; }
+  th { background: var(--masala); color: #FFF; text-align: left; padding: 12px 16px; font-size: 13px; font-weight: 700; }
+  th:first-child { border-radius: 10px 0 0 0; } th:last-child { border-radius: 0 10px 0 0; }
+  td { padding: 12px 16px; font-size: 13.5px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  tr:nth-child(even) td { background: rgba(245,166,35,0.04); }
+  td.hi { font-family: 'Noto Sans Devanagari', sans-serif; color: var(--muted); }
+
+  /* Payment section */
+  .payment-option { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 18px 20px; margin-bottom: 14px; display: flex; gap: 16px; align-items: flex-start; }
+  .payment-icon { font-size: 28px; flex-shrink: 0; }
+  .payment-en { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+  .payment-hi { font-size: 13px; color: var(--muted); font-family: 'Noto Sans Devanagari', sans-serif; }
+  .payment-detail { font-size: 12.5px; color: var(--muted); margin-top: 6px; }
+
+  /* FAQ */
+  .faq-item { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; margin-bottom: 14px; }
+  .faq-q { font-size: 14px; font-weight: 700; color: var(--masala); margin-bottom: 8px; }
+  .faq-q-hi { font-size: 13px; font-family: 'Noto Sans Devanagari', sans-serif; color: var(--masala); margin-bottom: 8px; }
+  .faq-a { font-size: 13.5px; color: var(--text); margin-bottom: 4px; }
+  .faq-a-hi { font-size: 13px; color: var(--muted); font-family: 'Noto Sans Devanagari', sans-serif; }
+
+  /* Footer */
+  .guide-footer { background: var(--masala); color: #FFF; text-align: center; padding: 36px 24px; margin-top: 60px; }
+  .guide-footer .f-logo { font-size: 36px; margin-bottom: 10px; }
+  .guide-footer .f-title { font-size: 22px; font-weight: 800; color: #F5A623; margin-bottom: 6px; }
+  .guide-footer .f-sub { font-size: 13px; color: rgba(255,255,255,0.6); margin-bottom: 20px; font-family: 'Noto Sans Devanagari', sans-serif; }
+  .guide-footer .f-tech { font-size: 12px; color: rgba(255,255,255,0.4); }
+
+  /* Print */
+  @media print {
+    .cover { page-break-after: always; }
+    .sec-header { page-break-before: auto; }
+    body { background: #FFF; }
+  }
+
+  /* Body section */
+  .guide-body { padding: 48px 32px; max-width: 820px; margin: 0 auto; }
+
+  .badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 6px; }
+  .badge-veg { background: rgba(26,127,75,0.12); color: var(--leaf); }
+  .badge-nonveg { background: rgba(181,69,27,0.12); color: var(--masala); }
+  .badge-jain { background: rgba(245,166,35,0.15); color: #8B6A00; }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════ COVER PAGE ═══════════════════════════════ -->
+<div class="cover">
+  <div class="cover-logo">🍱</div>
+  <div class="cover-app">Tiffinify</div>
+  <div class="cover-tagline">India's Premium Homestyle Tiffin Subscription App<br/>भारत का प्रीमियम होमस्टाइल टिफिन सब्सक्रिप्शन ऐप</div>
+  <div class="cover-titles">
+    <div class="cover-title-box">
+      <div class="lang">English</div>
+      <div class="title">Complete User Guide</div>
+    </div>
+    <div class="cover-title-box">
+      <div class="lang">हिंदी</div>
+      <div class="title" style="font-family:'Noto Sans Devanagari',sans-serif;">पूरी उपयोगकर्ता मार्गदर्शिका</div>
+    </div>
+  </div>
+  <div class="cover-pills">
+    <div class="cover-pill">Flutter Mobile App</div>
+    <div class="cover-pill">iOS &amp; Android</div>
+    <div class="cover-pill">Razorpay Payments</div>
+    <div class="cover-pill">Subscription Plans</div>
+  </div>
+  <div class="cover-footer">Tiffinify v1.0 · 2026 · Built with Flutter &amp; Dart</div>
+</div>
+
+<!-- ═══════════════════════════════ GUIDE BODY ═══════════════════════════════ -->
+<div class="guide-body">
+
+  <!-- TABLE OF CONTENTS -->
+  <div class="sec-header">
+    <div class="sec-icon">📋</div>
+    <div class="sec-header-text">
+      <div class="en">Table of Contents</div>
+      <div class="hi">सामग्री सूची</div>
+    </div>
+  </div>
+  <table>
+    <thead><tr><th>Section</th><th>Topic (English)</th><th>विषय (हिंदी)</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>Getting Started — Install &amp; Login</td><td class="hi">शुरुआत — इंस्टॉल और लॉगिन</td></tr>
+      <tr><td>2</td><td>Daily Menu &amp; Diet Filters</td><td class="hi">दैनिक मेनू और डाइट फ़िल्टर</td></tr>
+      <tr><td>3</td><td>Adding Items to Cart</td><td class="hi">कार्ट में आइटम जोड़ना</td></tr>
+      <tr><td>4</td><td>Checkout &amp; Payment Gateway</td><td class="hi">चेकआउट और पेमेंट गेटवे</td></tr>
+      <tr><td>5</td><td>Subscription Plans</td><td class="hi">सब्सक्रिप्शन प्लान</td></tr>
+      <tr><td>6</td><td>Order Tracking</td><td class="hi">ऑर्डर ट्रैकिंग</td></tr>
+      <tr><td>7</td><td>Profile, Wallet &amp; Preferences</td><td class="hi">प्रोफाइल, वॉलेट और प्राथमिकताएं</td></tr>
+      <tr><td>8</td><td>Festival Specials &amp; Notifications</td><td class="hi">त्योहार स्पेशल और नोटिफिकेशन</td></tr>
+      <tr><td>9</td><td>Help &amp; Support</td><td class="hi">सहायता और समर्थन</td></tr>
+      <tr><td>10</td><td>FAQs — Frequently Asked Questions</td><td class="hi">अक्सर पूछे जाने वाले प्रश्न</td></tr>
+    </tbody>
+  </table>
+
+  <!-- ─────────── SECTION 1: GETTING STARTED ─────────── -->
+  <div class="sec-header">
+    <div class="sec-icon">🚀</div>
+    <div class="sec-header-text">
+      <div class="en">Section 1 — Getting Started</div>
+      <div class="hi">सेक्शन 1 — शुरुआत कैसे करें</div>
+    </div>
+  </div>
+
+  <div class="step-grid">
+    <div class="step-card">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <div class="en">Download &amp; Install Tiffinify</div>
+        <div class="hi">Tiffinify डाउनलोड और इंस्टॉल करें</div>
+        <div class="desc">Open Google Play Store (Android) or App Store (iOS), search for "Tiffinify", and tap Install. The app is free to download.</div>
+        <div class="desc-hi">Google Play Store (Android) या App Store (iOS) खोलें, "Tiffinify" खोजें, और Install दबाएं। ऐप डाउनलोड करना निःशुल्क है।</div>
+      </div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <div class="en">Splash Screen &amp; Onboarding</div>
+        <div class="hi">स्प्लैश स्क्रीन और ऑनबोर्डिंग</div>
+        <div class="desc">On first launch, you'll see the animated Tiffinify logo followed by 3 onboarding screens explaining the app's features. Swipe right or tap "Next" to proceed.</div>
+        <div class="desc-hi">पहली बार खोलने पर आपको एनिमेटेड Tiffinify लोगो दिखेगा, फिर 3 ऑनबोर्डिंग स्क्रीन आएंगी जो ऐप की विशेषताएं बताती हैं। आगे बढ़ने के लिए "Next" दबाएं।</div>
+      </div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <div class="en">Enter Your Mobile Number</div>
+        <div class="hi">अपना मोबाइल नंबर डालें</div>
+        <div class="desc">Enter your 10-digit Indian mobile number and tap "Get OTP". A 4-digit OTP will be sent to your number via SMS.</div>
+        <div class="desc-hi">अपना 10 अंकों का भारतीय मोबाइल नंबर डालें और "OTP प्राप्त करें" दबाएं। आपके नंबर पर SMS द्वारा 4 अंकों का OTP आएगा।</div>
+      </div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <div class="en">Verify OTP</div>
+        <div class="hi">OTP सत्यापित करें</div>
+        <div class="desc">Enter the 4-digit OTP received on your mobile. (For demo: any 4-digit code works). Tap "Verify &amp; Login".</div>
+        <div class="desc-hi">मोबाइल पर आया 4 अंकों का OTP डालें। (डेमो में: कोई भी 4 अंक काम करेगा)। "Verify &amp; Login" दबाएं।</div>
+      </div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">5</div>
+      <div class="step-content">
+        <div class="en">Set Up Your Profile (New Users Only)</div>
+        <div class="hi">अपनी प्रोफाइल सेट करें (नए उपयोगकर्ता)</div>
+        <div class="desc">First-time users are directed to the Profile Setup screen. Enter your name and tap "Save &amp; Continue" to go to the Home screen.</div>
+        <div class="desc-hi">पहली बार आने वाले उपयोगकर्ताओं को Profile Setup स्क्रीन पर ले जाया जाएगा। अपना नाम डालें और "Save &amp; Continue" दबाएं।</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tip-box">
+    <div class="tip-en">💡 Tip: You stay logged in permanently! Tiffinify remembers your login — you won't need to re-enter OTP every time.</div>
+    <div class="tip-hi">💡 सुझाव: आप हमेशा लॉग इन रहते हैं! Tiffinify आपका लॉगिन याद रखता है — हर बार OTP डालने की जरूरत नहीं।</div>
+  </div>
+
+  <!-- ─────────── SECTION 2: DAILY MENU ─────────── -->
+  <div class="sec-header">
+    <div class="sec-icon">🍽️</div>
+    <div class="sec-header-text">
+      <div class="en">Section 2 — Daily Menu &amp; Diet Filters</div>
+      <div class="hi">सेक्शन 2 — दैनिक मेनू और डाइट फ़िल्टर</div>
+    </div>
+  </div>
+
+  <p style="font-size:14px; margin-bottom:16px;">The Home screen shows today's curated menu divided into three meal sections. You can filter by diet type using the chips at the top.</p>
+  <p style="font-size:14px; color:var(--muted); font-family:'Noto Sans Devanagari',sans-serif; margin-bottom:24px;">होम स्क्रीन पर आज का मेनू तीन भोजन सेक्शन में दिखता है। ऊपर के चिप्स से डाइट टाइप के अनुसार फ़िल्टर कर सकते हैं।</p>
+
+  <div class="info-grid">
+    <div class="info-card">
+      <div class="icon">☀️</div>
+      <div class="en">Breakfast Menu</div>
+      <div class="hi">नाश्ता मेनू — सुबह के व्यंजन, जैसे पोहा, उपमा, परांठा, इडली आदि</div>
+    </div>
+    <div class="info-card">
+      <div class="icon">🕛</div>
+      <div class="en">Lunch Menu</div>
+      <div class="hi">दोपहर का भोजन — दाल, सब्ज़ी, रोटी, चावल, पनीर के व्यंजन</div>
+    </div>
+    <div class="info-card">
+      <div class="icon">🌙</div>
+      <div class="en">Dinner Menu</div>
+      <div class="hi">रात का खाना — घर जैसा खाना, दाल तड़का, करी, रोटी</div>
+    </div>
+    <div class="info-card">
+      <div class="icon">🔍</div>
+      <div class="en">Diet Filter Chips</div>
+      <div class="hi">डाइट फ़िल्टर — All, Veg, Non-Veg, Jain में से चुनें और मेनू फ़िल्टर हो जाएगा</div>
+    </div>
+  </div>
+
+  <table>
+    <thead><tr><th>Diet Badge | बैज</th><th>Meaning (English)</th><th>अर्थ (हिंदी)</th></tr></thead>
+    <tbody>
+      <tr><td><span class="badge badge-veg">VEG</span></td><td>Pure vegetarian dishes — no meat, no eggs</td><td class="hi">शुद्ध शाकाहारी — मांस, अंडे नहीं</td></tr>
+      <tr><td><span class="badge badge-nonveg">NON-VEG</span></td><td>Non-vegetarian dishes — chicken, mutton, eggs</td><td class="hi">मांसाहारी — चिकन, मटन, अंडे</td></tr>
+      <tr><td><span class="badge badge-jain">JAIN</span></td><td>Jain diet — no root vegetables, strictly pure</td><td class="hi">जैन भोजन — जड़ वाली सब्ज़ियाँ नहीं, शुद्ध</td></tr>
+    </tbody>
+  </table>
+
+  <!-- ─────────── SECTION 3: CART ─────────── -->
+  <div class="sec-header">
+    <div class="sec-icon">🛒</div>
+    <div class="sec-header-text">
+      <div class="en">Section 3 — Adding Items to Cart</div>
+      <div class="hi">सेक्शन 3 — कार्ट में आइटम जोड़ना</div>
+    </div>
+  </div>
+
+  <div class="step-grid">
+    <div class="step-card">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <div class="en">Browse the Daily Menu</div>
+        <div class="hi">दैनिक मेनू ब्राउज़ करें</div>
+        <div class="desc">Scroll through Breakfast, Lunch, and Dinner sections. Each item card shows the dish name, price, and diet badge.</div>
+        <div class="desc-hi">नाश्ता, दोपहर का खाना और रात के खाने के सेक्शन स्क्रॉल करें। हर आइटम कार्ड पर डिश का नाम, कीमत और डाइट बैज दिखता है।</div>
+      </div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <div class="en">Tap "Add to Cart" (+)</div>
+        <div class="hi">"Add to Cart" (+) दबाएं</div>
+        <div class="desc">Tap the (+) button on any item to add it to your cart. Tap (+)/(-) to increase or decrease quantity.</div>
+        <div class="desc-hi">किसी भी आइटम पर (+) बटन दबाकर कार्ट में जोड़ें। (+)/(-) से मात्रा बढ़ाएं या घटाएं।</div>
+      </div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <div class="en">View Cart Summary</div>
+        <div class="hi">कार्ट सारांश देखें</div>
+        <div class="desc">Tap the cart icon (bottom navigation) to see your full cart with: Subtotal + Delivery Charge (₹30) + GST (5%) = Grand Total.</div>
+        <div class="desc-hi">कार्ट आइकन (नीचे नेविगेशन) दबाकर पूरा कार्ट देखें: सबटोटल + डिलीवरी शुल्क (₹30) + GST (5%) = कुल राशि।</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tip-box">
+    <div class="tip-en">🛒 Your cart is saved even if you switch screens. Come back and your items will still be there!</div>
+    <div class="tip-hi">🛒 स्क्रीन बदलने पर भी आपका कार्ट सेव रहता है। वापस आने पर आपके आइटम मिलेंगे!</div>
+  </div>
+
+  <!-- ─────────── SECTION 4: PAYMENT ─────────── -->
+  <div class="sec-header">
+    <div class="sec-icon">💳</div>
+    <div class="sec-header-text">
+      <div class="en">Section 4 — Checkout &amp; Payment</div>
+      <div class="hi">सेक्शन 4 — चेकआउट और पेमेंट</div>
+    </div>
+  </div>
+
+  <p style="font-size:14px; margin-bottom:8px;">Tiffinify supports 3 payment methods. When you tap "Place Order", a Payment Selection Sheet opens:</p>
+  <p style="font-size:14px; color:var(--muted); font-family:'Noto Sans Devanagari',sans-serif; margin-bottom:24px;">Tiffinify 3 पेमेंट तरीकों को सपोर्ट करता है। "Place Order" दबाने पर Payment Selection Sheet खुलती है:</p>
+
+  <div class="payment-option">
+    <div class="payment-icon">💳</div>
+    <div>
+      <div class="payment-en">Razorpay Online Payment (Recommended)</div>
+      <div class="payment-hi">रेजरपे ऑनलाइन पेमेंट (अनुशंसित)</div>
+      <div class="payment-detail">Choose from UPI (GPay, PhonePe, Paytm, BHIM), Debit/Credit Card, or Netbanking. A secure Razorpay gateway popup opens. Tap PAY to complete. You'll receive a unique Payment ID.<br/><br/><span style="font-family:'Noto Sans Devanagari',sans-serif; color:var(--muted);">UPI (GPay, PhonePe, Paytm, BHIM), डेबिट/क्रेडिट कार्ड या नेटबैंकिंग से चुनें। सुरक्षित Razorpay गेटवे खुलता है। PAY दबाने पर एक यूनिक Payment ID मिलती है।</span></div>
+    </div>
+  </div>
+  <div class="payment-option">
+    <div class="payment-icon">💵</div>
+    <div>
+      <div class="payment-en">Cash on Delivery (COD)</div>
+      <div class="payment-hi">कैश ऑन डिलीवरी (COD)</div>
+      <div class="payment-detail">Pay cash directly to the delivery partner when your tiffin arrives at your door. No digital payment needed.<br/><br/><span style="font-family:'Noto Sans Devanagari',sans-serif; color:var(--muted);">डिलीवरी पार्टनर को दरवाजे पर नकद भुगतान करें। किसी डिजिटल पेमेंट की जरूरत नहीं।</span></div>
+    </div>
+  </div>
+  <div class="payment-option">
+    <div class="payment-icon">👛</div>
+    <div>
+      <div class="payment-en">Tiffinify Wallet</div>
+      <div class="payment-hi">Tiffinify वॉलेट</div>
+      <div class="payment-detail">Use your Tiffinify Wallet balance (earned from skipped meals, referrals, or top-ups). Balance shown before confirmation.<br/><br/><span style="font-family:'Noto Sans Devanagari',sans-serif; color:var(--muted);">Tiffinify वॉलेट बैलेंस उपयोग करें (स्किप किए गए मील्स, रेफरल या टॉप-अप से मिला)। कन्फर्मेशन से पहले बैलेंस दिखाया जाता है।</span></div>
+    </div>
+  </div>
+
+  <div class="note-box">
+    <div class="tip-en">✅ Your payment is 100% secure. Razorpay uses 256-bit SSL encryption for all transactions.</div>
+    <div class="tip-hi">✅ आपकी पेमेंट 100% सुरक्षित है। Razorpay सभी लेन-देन के लिए 256-bit SSL एन्क्रिप्शन का उपयोग करता है।</div>
+  </div>
+
+  <!-- ─────────── SECTION 5: SUBSCRIPTION ─────────── -->
+  <div class="sec-header">
+    <div class="sec-icon">📦</div>
+    <div class="sec-header-text">
+      <div class="en">Section 5 — Subscription Plans</div>
+      <div class="hi">सेक्शन 5 — सब्सक्रिप्शन प्लान</div>
+    </div>
+  </div>
+
+  <p style="font-size:14px; margin-bottom:8px;">Subscribe to a meal plan to get daily tiffin delivered automatically without ordering every day. Go to the <strong>Subscription</strong> tab from the bottom navigation.</p>
+  <p style="font-size:14px; color:var(--muted); font-family:'Noto Sans Devanagari',sans-serif; margin-bottom:24px;">मील प्लान सब्सक्राइब करें और हर रोज़ ऑर्डर किए बिना तिफिन पाएं। नीचे नेविगेशन से <strong>Subscription</strong> टैब पर जाएं।</p>
+
+  <table>
+    <thead><tr><th>Plan | प्लान</th><th>Price | कीमत</th><th>Duration | अवधि</th><th>Best For | उपयुक्त</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Weekly</strong></td><td>₹499</td><td>7 Days | 7 दिन</td><td class="hi">यात्रियों के लिए, छोटे ट्रायल के लिए</td></tr>
+      <tr><td><strong>Monthly</strong></td><td>₹1799</td><td>30 Days | 30 दिन</td><td class="hi">नियमित उपयोगकर्ताओं के लिए — 10% बचत</td></tr>
+    </tbody>
+  </table>
+
+  <div class="info-grid">
+    <div class="info-card">
+      <div class="icon">🥦</div>
+      <div class="en">Choose Diet Preference</div>
+      <div class="hi">डाइट प्राथमिकता चुनें — Veg, Non-Veg या Jain में से अपनी पसंद चुनें</div>
+    </div>
+    <div class="info-card">
+      <div class="icon">🍱</div>
+      <div class="en">Meals Per Day</div>
+      <div class="hi">प्रति दिन भोजन — 1x (एक) या 2x (दो) मील्स प्रतिदिन का चयन करें</div>
+    </div>
+    <div class="info-card">
+      <div class="icon">⏸</div>
+      <div class="en">Pause / Resume</div>
+      <div class="hi">रोकें / जारी रखें — यात्रा पर जाएं तो प्लान रोक दें, वापस आने पर एक टैप में शुरू करें</div>
+    </div>
+    <div class="info-card">
+      <div class="icon">⏭</div>
+      <div class="en">Skip Today</div>
+      <div class="hi">आज स्किप करें — आज का मील स्किप करें और वॉलेट में रिफंड पाएं</div>
+    </div>
+  </div>
+
+  <!-- ─────────── SECTION 6: ORDER TRACKING ─────────── -->
+  <div class="sec-header">
+    <div class="sec-icon">📍</div>
+    <div class="sec-header-text">
+      <div class="en">Section 6 — Order Tracking</div>
+      <div class="hi">सेक्शन 6 — ऑर्डर ट्रैकिंग</div>
+    </div>
+  </div>
+
+  <div class="step-grid">
+    <div class="step-card">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <div class="en">Order Placed ✅</div>
+        <div class="hi">ऑर्डर दर्ज हो गया ✅</div>
+        <div class="desc">After successful payment, your order is confirmed and you're taken to the Order Tracking screen automatically.</div>
+        <div class="desc-hi">सफल पेमेंट के बाद आपका ऑर्डर कन्फर्म हो जाता है और ऑर्डर ट्रैकिंग स्क्रीन पर ले जाया जाता है।</div>
+      </div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <div class="en">Live Status Updates</div>
+        <div class="hi">लाइव स्टेटस अपडेट</div>
+        <div class="desc">Track your order through: Order Confirmed → Being Prepared → Out for Delivery → Delivered. Each step updates in real-time.</div>
+        <div class="desc-hi">अपने ऑर्डर को ट्रैक करें: ऑर्डर कन्फर्म → तैयार हो रहा है → डिलीवरी पर → डिलीवर। हर स्टेप रियल-टाइम में अपडेट होता है।</div>
+      </div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <div class="en">Delivery Countdown Timer</div>
+        <div class="hi">डिलीवरी काउंटडाउन टाइमर</div>
+        <div class="desc">A live countdown timer shows estimated delivery time. Timer runs in real-time so you know exactly when to expect your tiffin.</div>
+        <div class="desc-hi">लाइव काउंटडाउन टाइमर अनुमानित डिलीवरी समय दिखाता है। टाइमर रियल-टाइम में चलता है।</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─────────── SECTION 7: PROFILE ─────────── -->
+  <div class="sec-header">
+    <div class="sec-icon">👤</div>
+    <div class="sec-header-text">
+      <div class="en">Section 7 — Profile, Wallet &amp; Preferences</div>
+      <div class="hi">सेक्शन 7 — प्रोफाइल, वॉलेट और प्राथमिकताएं</div>
+    </div>
+  </div>
+
+  <p style="font-size:14px; margin-bottom:8px;">Go to the <strong>Profile</strong> tab (bottom right) to manage all your account settings.</p>
+  <p style="font-size:14px; color:var(--muted); font-family:'Noto Sans Devanagari',sans-serif; margin-bottom:24px;">नीचे दाएं <strong>Profile</strong> टैब से अपनी सभी अकाउंट सेटिंग्स प्रबंधित करें।</p>
+
+  <div class="info-grid">
+    <div class="info-card">
+      <div class="icon">📍</div>
+      <div class="en">Saved Delivery Addresses</div>
+      <div class="hi">सेव किए गए पते — Home, Work, या Other जोड़ें और प्रबंधित करें</div>
+    </div>
+    <div class="info-card">
+      <div class="icon">👛</div>
+      <div class="en">Tiffinify Wallet</div>
+      <div class="hi">वॉलेट बैलेंस और पूरा लेन-देन इतिहास देखें — क्रेडिट और डेबिट</div>
+    </div>
+    <div class="info-card">
+      <div class="icon">🥦</div>
+      <div class="en">Dietary Preferences</div>
+      <div class="hi">डिफ़ॉल्ट डाइट टाइप (Veg/Non-Veg/Jain) और एलर्जी नोट्स सेट करें</div>
+    </div>
+    <div class="info-card">
+      <div class="icon">🎛️</div>
+      <div class="en">Customization Templates</div>
+      <div class="hi">कस्टमाइज़ेशन टेम्पलेट सेव करें जैसे "अतिरिक्त रोटी", "प्याज़ नहीं" — डिफ़ॉल्ट सेट करें</div>
+    </div>
+    <div class="info-card">
+      <div class="icon">📞</div>
+      <div class="en">Help &amp; Support</div>
+      <div class="hi">सीधे कॉल करें या WhatsApp पर संपर्क करें। FAQ सेक्शन भी उपलब्ध है।</div>
+    </div>
+    <div class="info-card">
+      <div class="icon">🚪</div>
+      <div class="en">Logout</div>
+      <div class="hi">लॉग आउट करें — अकाउंट से बाहर निकलें</div>
+    </div>
+  </div>
+
+  <!-- ─────────── SECTION 8: FESTIVALS ─────────── -->
+  <div class="sec-header">
+    <div class="sec-icon">🎂</div>
+    <div class="sec-header-text">
+      <div class="en">Section 8 — Festival Specials &amp; Notifications</div>
+      <div class="hi">सेक्शन 8 — त्योहार स्पेशल और नोटिफिकेशन</div>
+    </div>
+  </div>
+
+  <div class="info-grid">
+    <div class="info-card">
+      <div class="icon">🪔</div>
+      <div class="en">Festival Special Menus</div>
+      <div class="hi">त्योहारों पर स्पेशल मेनू — दीवाली, होली, नवरात्रि, ईद पर थीम्ड व्यंजन</div>
+    </div>
+    <div class="info-card">
+      <div class="icon">⏰</div>
+      <div class="en">Limited Time Offers</div>
+      <div class="hi">सीमित समय के ऑफर — त्योहार स्पेशल आइटम सीमित समय के लिए उपलब्ध</div>
+    </div>
+    <div class="info-card">
+      <div class="icon">🔔</div>
+      <div class="en">In-App Notifications</div>
+      <div class="hi">इन-ऐप नोटिफिकेशन — ऑर्डर अपडेट, नए मेनू, ऑफर और सब्सक्रिप्शन अलर्ट</div>
+    </div>
+    <div class="info-card">
+      <div class="icon">🛎️</div>
+      <div class="en">Notification Bell</div>
+      <div class="hi">होम स्क्रीन पर बेल आइकन दबाकर सभी नोटिफिकेशन देखें</div>
+    </div>
+  </div>
+
+  <!-- ─────────── SECTION 9: SUPPORT ─────────── -->
+  <div class="sec-header">
+    <div class="sec-icon">📞</div>
+    <div class="sec-header-text">
+      <div class="en">Section 9 — Help &amp; Support</div>
+      <div class="hi">सेक्शन 9 — सहायता और समर्थन</div>
+    </div>
+  </div>
+
+  <div class="info-grid">
+    <div class="info-card">
+      <div class="icon">📞</div>
+      <div class="en">Call Us Directly</div>
+      <div class="hi">सीधे कॉल करें — Profile → Help &amp; Support → Call करें। फोन डायलर खुल जाएगा।</div>
+    </div>
+    <div class="info-card">
+      <div class="icon">💬</div>
+      <div class="en">WhatsApp Support</div>
+      <div class="hi">WhatsApp पर बात करें — Profile → Help &amp; Support → WhatsApp Chat खुलेगी।</div>
+    </div>
+    <div class="info-card">
+      <div class="icon">❓</div>
+      <div class="en">In-App FAQs</div>
+      <div class="hi">ऐप में ही FAQ सेक्शन — आम सवालों के जवाब तुरंत पाएं</div>
+    </div>
+    <div class="info-card">
+      <div class="icon">📧</div>
+      <div class="en">Email Support</div>
+      <div class="hi">ईमेल सपोर्ट — जटिल समस्याओं के लिए support@tiffinify.in पर लिखें</div>
+    </div>
+  </div>
+
+  <!-- ─────────── SECTION 10: FAQs ─────────── -->
+  <div class="sec-header">
+    <div class="sec-icon">❓</div>
+    <div class="sec-header-text">
+      <div class="en">Section 10 — Frequently Asked Questions</div>
+      <div class="hi">सेक्शन 10 — अक्सर पूछे जाने वाले प्रश्न</div>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">Q1. Can I use Tiffinify without a subscription?</div>
+    <div class="faq-q-hi">Q1. क्या मैं बिना सब्सक्रिप्शन के Tiffinify उपयोग कर सकता हूं?</div>
+    <div class="faq-a">A: Yes! You can order individual meals from the daily menu without subscribing. Subscription gives you daily automatic delivery and discounts.</div>
+    <div class="faq-a-hi">हाँ! आप सब्सक्रिप्शन के बिना भी डेली मेनू से अलग-अलग मील ऑर्डर कर सकते हैं। सब्सक्रिप्शन से रोज़ाना ऑटोमैटिक डिलीवरी और छूट मिलती है।</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">Q2. How do I pause my subscription when I'm travelling?</div>
+    <div class="faq-q-hi">Q2. यात्रा पर होने पर सब्सक्रिप्शन कैसे रोकूं?</div>
+    <div class="faq-a">A: Go to Subscription tab → tap "Pause Plan". Your subscription pauses and no meals are delivered until you resume it.</div>
+    <div class="faq-a-hi">Subscription टैब पर जाएं → "Pause Plan" दबाएं। आपका सब्सक्रिप्शन रुक जाएगा और Resume करने तक कोई डिलीवरी नहीं होगी।</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">Q3. What happens if I skip a day?</div>
+    <div class="faq-q-hi">Q3. एक दिन स्किप करने पर क्या होगा?</div>
+    <div class="faq-a">A: If you skip today's meal using the "Skip Today" button, the meal cost is refunded to your Tiffinify Wallet automatically.</div>
+    <div class="faq-a-hi">"Skip Today" बटन दबाने पर उस दिन का मील का खर्च अपने आप Tiffinify वॉलेट में वापस आ जाता है।</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">Q4. Is my payment information secure?</div>
+    <div class="faq-q-hi">Q4. क्या मेरी पेमेंट जानकारी सुरक्षित है?</div>
+    <div class="faq-a">A: Absolutely! All payments are processed through Razorpay which uses 256-bit SSL encryption. Tiffinify does NOT store your card or bank details.</div>
+    <div class="faq-a-hi">बिल्कुल! सभी पेमेंट Razorpay के ज़रिए होती हैं जो 256-bit SSL एन्क्रिप्शन का उपयोग करता है। Tiffinify आपके कार्ड या बैंक विवरण स्टोर नहीं करता।</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">Q5. Can I change my diet preference after subscribing?</div>
+    <div class="faq-q-hi">Q5. सब्सक्रिप्शन के बाद डाइट प्राथमिकता बदल सकता हूं?</div>
+    <div class="faq-a">A: Yes. Go to Profile → Dietary Preferences → Select your preferred diet type (Veg / Non-Veg / Jain) and save. Changes apply from next delivery.</div>
+    <div class="faq-a-hi">हाँ। Profile → Dietary Preferences → अपनी पसंदीदा डाइट (Veg/Non-Veg/Jain) चुनें और सेव करें। अगली डिलीवरी से बदलाव लागू होगा।</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">Q6. How do I use the Tiffinify Wallet?</div>
+    <div class="faq-q-hi">Q6. Tiffinify वॉलेट का उपयोग कैसे करें?</div>
+    <div class="faq-a">A: Your wallet balance is shown on the Profile screen. When paying for an order, select "Tiffinify Wallet" as payment method. If your balance is sufficient, the payment completes instantly.</div>
+    <div class="faq-a-hi">Profile स्क्रीन पर वॉलेट बैलेंस दिखता है। ऑर्डर पेमेंट के समय "Tiffinify Wallet" चुनें। पर्याप्त बैलेंस होने पर पेमेंट तुरंत हो जाती है।</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">Q7. How do I save a delivery address?</div>
+    <div class="faq-q-hi">Q7. डिलीवरी पता कैसे सेव करें?</div>
+    <div class="faq-a">A: Go to Profile → Saved Addresses → tap "Add New Address". Enter address details, select label (Home/Work/Other), and save.</div>
+    <div class="faq-a-hi">Profile → Saved Addresses → "Add New Address" दबाएं। पता डालें, लेबल (Home/Work/Other) चुनें और सेव करें।</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">Q8. What is a Customization Template?</div>
+    <div class="faq-q-hi">Q8. कस्टमाइज़ेशन टेम्पलेट क्या है?</div>
+    <div class="faq-a">A: Templates let you save your regular food customizations (e.g., "Extra 2 Rotis, No Onion, Less Spice") and apply them to future orders in one tap.</div>
+    <div class="faq-a-hi">टेम्पलेट से आप अपनी नियमित फूड कस्टमाइज़ेशन (जैसे "2 अतिरिक्त रोटी, प्याज़ नहीं, कम मसाला") सेव कर सकते हैं और एक टैप में आगे के ऑर्डर में लगा सकते हैं।</div>
+  </div>
+
+</div>
+
+<!-- ═══════════════════════════════ FOOTER ═══════════════════════════════ -->
+<div class="guide-footer">
+  <div class="f-logo">🍱</div>
+  <div class="f-title">Tiffinify</div>
+  <div class="f-sub">घर जैसा खाना, रोज़ आपके दरवाज़े पर<br/>Homestyle Food, Delivered Daily to Your Door</div>
+  <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin-bottom:20px;">
+    <div style="background:rgba(255,255,255,0.1); border-radius:8px; padding:8px 18px; font-size:12px;">📱 Flutter App</div>
+    <div style="background:rgba(255,255,255,0.1); border-radius:8px; padding:8px 18px; font-size:12px;">🔵 Riverpod State</div>
+    <div style="background:rgba(255,255,255,0.1); border-radius:8px; padding:8px 18px; font-size:12px;">💳 Razorpay Gateway</div>
+    <div style="background:rgba(255,255,255,0.1); border-radius:8px; padding:8px 18px; font-size:12px;">📦 Subscription System</div>
+  </div>
+  <div class="f-tech">Tiffinify v1.0 · Built with Flutter &amp; Dart · © 2026 Tiffinify · d:\bhumi\fitness_tracker</div>
+</div>
+
+</body>
+</html>
